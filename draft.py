@@ -51,7 +51,7 @@ def viterbi(ob_seq):
     
     """
     most_psb_path = []
-    most_psb_path_prob = []
+    # most_psb_path_prob = []
     s_start = get_argmax(start_pos)
     # most_psb_path.append(s_start)
 
