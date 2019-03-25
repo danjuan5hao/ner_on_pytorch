@@ -14,44 +14,29 @@ import numpy as np
 # c   0.6, 0.1, 0.1, 0.2
 
 t_mat = {
-    "a":{
-        "a": 0.3,
-        "b": 0.5,
-        "c": 0.2
+    "health":{
+        "health": 0.7,
+        "fever": 0.3,
     },
-    "b":{
-        "a": 0.8,
-        "b": 0.1,
-        "c": 0.1
-    },
-    "c":{
-        "a": 0.2,
-        "b": 0.5,
-        "c": 0.3
-    }
+    "fever":{
+        "health": 0.4,
+        "fever": 0.6,
+    } 
 }
 e_mat = {
-    "a":{
-        "o1": 0.2,
-        "o2": 0.1,
-        "o3": 0.5,
-        "o4": 0.2
+    "health":{
+        "normal": 0.5,
+        "cold": 0.4,
+        "dizzy": 0.1,
     },
-    "b":{
-        "o1": 0.4,
-        "o2": 0.2,
-        "o3": 0.1,
-        "o4": 0.3
-    },
-    "c":{
-        "o1": 0.6,
-        "o2": 0.1,
-        "o3": 0.1,
-        "o4": 0.2
+    "fever":{
+        "normal": 0.1,
+        "cold": 0.3,
+        "dizzy": 0.6,
     }
 }
 
-start_pos = {"a": 0.3, "b": 0.4, "c": 0.3}
+start_pos = {"health": 0.6, "fever": 0.4}
 
 def get_argmax(a):
     return max(a, key=a.get)
@@ -68,12 +53,16 @@ def viterbi(ob_seq):
     most_psb_path = []
     most_psb_path_prob = []
     s_start = get_argmax(start_pos)
-    most_psb_path.append(s_start)
+    # most_psb_path.append(s_start)
 
-    def get_partial_max(ob, last_stat):
+    def get_partial_max(ob):
         """
         return partial max point, return max_prob    
         """
+        try:
+            last_stat = most_psb_path[-1]
+        except IndexError:
+            last_stat = s_start
         tmp = {}
         # print("lll", last_stat)
         for s in t_mat:
@@ -86,12 +75,12 @@ def viterbi(ob_seq):
 
     for ob in ob_seq:
         # print("111", most_psb_path)
-        get_partial_max(ob, most_psb_path[-1])
+        get_partial_max(ob)
 
     # print(most_psb_path)
     return most_psb_path
 
 if __name__ == '__main__':
-    test_ob_seq = ["o1", "o1", "o1"]
+    test_ob_seq = ["normal", "cold", "dizzy"]
     mst_stat = viterbi(test_ob_seq)
     print(mst_stat)
