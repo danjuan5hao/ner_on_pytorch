@@ -36,11 +36,16 @@ class CrfLayer(nn.Module):
         # self._find_best_next_tag_idx()
         return score, idx_seq
 
-
     def forward(self, input_tensor): 
         """inpter_tensor的size需要是（seq_len, tagset_size）
         """
         return  self._viterbi_decode(input_tensor)
+    
+
+
+def CrfLoss()
+
+
 
 if __name__ == "__main__":
     tag_to_ix = {"B": 0, "I": 1, "O": 2, "E": 3, "S": 4, "START_TAG": 5, "STOP_TAG": 6}
